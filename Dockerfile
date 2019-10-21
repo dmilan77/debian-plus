@@ -1,5 +1,4 @@
 FROM debian:stretch-20191014-slim
-# docker run -it --rm dmilan/alpine-plus
 LABEL maintainer="Milan Das <milan.das77@gmail.com>"
 ENV KUBE_LATEST_VERSION="v1.15.1"
 RUN apt update
