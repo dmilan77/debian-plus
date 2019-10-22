@@ -10,6 +10,7 @@ RUN mkdir -p /usr/share/man/man1
 
 RUN apt-get update
 RUN apt-get install openjdk-8-jdk-headless -y
-
+# Clean up APT when done.
+RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
