@@ -1,5 +1,6 @@
 FROM debian:stretch-20191014-slim
 LABEL maintainer="Milan Das <milan.das77@gmail.com>"
+ENV DEBIAN_FRONTEND noninteractive
 ENV KUBE_LATEST_VERSION="v1.15.1"
 RUN apt-get update
 RUN apt-get install apt-utils wget curl git jq dnsutils nmap -y 
