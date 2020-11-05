@@ -20,9 +20,12 @@ RUN apt-get update && apt-get install -y gnupg2
 # RUN apt-get install openjdk-8-jdk-headless -yq
 # Clean up APT when done.
 RUN  apt install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev curl libbz2-dev -y
+RUN /tmp
 RUN curl -O https://www.python.org/ftp/python/3.8.6/Python-3.8.6.tar.xz 
 RUN tar -xf Python-3.8.6.tar.xz  && cd Python-3.8.6 && ./configure --enable-optimizations && make -j 4 &&   make altinstall
-
+RUN /tmp
+RUN curl -O http://download.redis.io/redis-stable.tar.gz
+RUN tar xvzf redis-stable.tar.gz && cd redis-stable && make &&  cp src/redis-cli /usr/local/bin/ &&  chmod 755 /usr/local/bin/redis-cli
 RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
 
 
