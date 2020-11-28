@@ -1,0 +1,39 @@
+FROM debian:buster-slim
+# FROM debian:stretch-20200327-slim
+LABEL maintainer="Milan Das <milan.das77@gmail.com>"
+ENV DEBIAN_FRONTEND noninteractive
+ENV KUBE_LATEST_VERSION="v1.15.1"
+RUN apt-get update
+RUN apt-get install apt-utils wget curl git jq dnsutils nmap netcat -yq
+RUN apt-get update && apt-get install -y gnupg2
+
+
+RUN  apt-get install build-essential zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libsqlite3-dev libreadline-dev libffi-dev curl libbz2-dev iputils-ping -y
+
+# Install python3
+RUN  apt-get install -y python3.7 python-pip python3-venv unzip
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.7 1
+
+RUN  apt-get update &&  apt-get install -y apt-transport-https gnupg2 lsb-release ca-certificates  python-pip
+RUN curl -s https://packages.cloud.google.com/apt/doc/apt-key.gpg |  apt-key add -
+RUN echo "deb https://apt.kubernetes.io/ kubernetes-xenial main" |  tee -a /etc/apt/sources.list.d/kubernetes.list
+RUN  apt-get update
+RUN  apt-get install -y kubectl
+
+
+
+# Install helm
+RUN cd /tmp
+RUN cd /tmp && curl --silent --location "https://get.helm.sh/helm-v3.4.1-linux-amd64.tar.gz" | tar xz -C /tmp
+RUN cd /tmp && pwd && ls -l
+
+RUN cd /tmp && chmod 755 linux-amd64/helm
+RUN cd /tmp && mv linux-amd64/helm  /usr/local/bin
+
+
+
+# Install other tools
+RUN apt-get install -y fzf
+
+# Clean up
+RUN rm -rf /tmp/*
